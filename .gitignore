@@ -82,6 +82,10 @@ public
 tmp/
 temp/
 
+# Docker
+.env
+docker-compose.override.yml
+
 # Editor directories and files
 .vscode/
 .idea/
