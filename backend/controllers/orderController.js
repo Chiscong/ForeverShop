@@ -6,8 +6,13 @@ import { VNPay } from "vnpay";
 // global varibles
 const currency = 'usd'
 const deliveryCharge = 10
-// GATE WAY
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+// GATE WAY - Initialize Stripe safely
+let stripe;
+if (process.env.STRIPE_SECRET_KEY) {
+    stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+} else {
+    console.warn('STRIPE_SECRET_KEY not found in environment variables');
+}
 const vnpay = new VNPay({
     tmnCode: process.env.VNP_TMNCODE,
     secureSecret: process.env.VNP_HASH_SECRET,
@@ -43,6 +48,11 @@ const placeOrder = async (req, res) => {
 // Placing orders using Stripe Method
 const placeOrderStripe = async (req, res) => {
     try {
+        // Check if Stripe is initialized
+        if (!stripe) {
+            return res.json({ success: false, message: "Stripe not configured. Please check STRIPE_SECRET_KEY environment variable." });
+        }
+        
         const { userId, items, amount, address } = req.body
         const { origin } = req.headers;
         const orderData = {
