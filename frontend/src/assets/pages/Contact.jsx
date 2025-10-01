@@ -40,12 +40,12 @@ const Contact = () => {
           <div className="flex items-center gap-3">
             <span className="font-medium w-28">LinkedIn:</span>
             <a
-              href="https://www.linkedin.com/in/your-profile"
+              href="https://www.linkedin.com/in/congpc2005/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline hover:text-blue-800 transition"
             >
-              linkedin.com/in/your-profile
+              Chí Công 
             </a>
           </div>
 
@@ -53,12 +53,12 @@ const Contact = () => {
           <div className="flex items-center gap-3">
             <span className="font-medium w-28"> GitHub:</span>
             <a
-              href="https://github.com/your-username"
+              href="https://github.com/Chiscong"
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:underline hover:text-blue-800 transition"
             >
-              github.com/your-username
+              Chiscong
             </a>
           </div>
         </div>
