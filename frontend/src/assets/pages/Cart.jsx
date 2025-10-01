@@ -6,7 +6,7 @@ import { assets } from '../assets/frontend_assets/assets'
 import CartTotal from '../../components/CartTotal'
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, navigate } = useContext(ShopContext);
+  const { products, currency, cartItems, updateQuantity, navigate, token } = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
   useEffect(() => {
     if (products.length > 0) {
@@ -29,6 +29,26 @@ const Cart = () => {
 
 
   }, [cartItems, products]);
+  // Show login message if not authenticated
+  if (!token) {
+    return (
+      <div className='border-t pt-14'>
+        <div className='text-2xl mb-3'>
+          <Title text1={"MY"} text2={"CART"} />
+        </div>
+        <div className='text-center py-20'>
+          <p className='text-xl text-gray-600 mb-4'>Please login to view your cart</p>
+          <button 
+            onClick={() => navigate('/login')} 
+            className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'
+          >
+            LOGIN
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='border-t pt-14'>
       <div className='text-2xl mb-3 '>

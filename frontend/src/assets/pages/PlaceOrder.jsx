@@ -96,6 +96,23 @@ const PlaceOrder = () => {
             toast.error(error.message)
         }
     }
+    // Redirect to login if not authenticated
+    if (!token) {
+        return (
+            <div className='border-t pt-14'>
+                <div className='text-center py-20'>
+                    <p className='text-xl text-gray-600 mb-4'>Please login to place an order</p>
+                    <button 
+                        onClick={() => navigate('/login')} 
+                        className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700'
+                    >
+                        LOGIN
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <form onSubmit={onSubmitHander} className='flex flex=col sm:flex-row justify-between gap-4 pt-5 sm:pt-14 min-h-[80vh] border-t'>
             {/* {Left side}        */}

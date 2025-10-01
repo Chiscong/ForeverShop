@@ -16,15 +16,22 @@ export const ShopContextProvider = (props) => {
     const navigate = useNavigate();
 
     const addToCart = async (itemId, size) => {
-        if (!size) {
-            toast.error("Vui lòng chọn size");
+        // Check if user is logged in
+        if (!token) {
+            toast.error("Please login to add items to cart");
+            navigate('/login');
             return;
         }
+
+        if (!size) {
+            toast.error("Please select size");
+            return;
+        }
+
         let cartData = structuredClone(cartItems);
         if (cartItems[itemId]) {
             if (cartItems[itemId][size]) {
                 cartData[itemId][size] += 1;
-
             }
             else {
                 cartData[itemId][size] = 1;
@@ -33,15 +40,17 @@ export const ShopContextProvider = (props) => {
             cartData[itemId] = {}
             cartData[itemId][size] = 1;
         }
-        toast.success("Đã thêm vào giỏ hàng");
+        
         setCartItems(cartData);
-        if (token) {
-            try {
-                await axios.post(backendUrl + '/api/cart/add', { itemId, size }, { headers: { token } })
-            } catch (error) {
-                console.log(error);
-                toast.error(error.message)
-            }
+        
+        try {
+            await axios.post(backendUrl + '/api/cart/add', { itemId, size }, { headers: { token } })
+            toast.success("Added to cart successfully");
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message)
+            // Revert cart changes if API call fails
+            setCartItems(cartItems);
         }
     }
     const getCartCount = () => {
@@ -62,16 +71,24 @@ export const ShopContextProvider = (props) => {
         return count;
     }
     const updateQuantity = async (itemId, size, quantity) => {
+        // Check if user is logged in
+        if (!token) {
+            toast.error("Please login to update cart");
+            navigate('/login');
+            return;
+        }
+
         let cartData = structuredClone(cartItems);
         cartData[itemId][size] = quantity;
         setCartItems(cartData);
-        if (token) {
-            try {
-                await axios.post(backendUrl + '/api/cart/update', { itemId, size, quantity }, { headers: { token } })
-            } catch (error) {
-                console.log(error);
-                toast.error(error.message)
-            }
+        
+        try {
+            await axios.post(backendUrl + '/api/cart/update', { itemId, size, quantity }, { headers: { token } })
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message)
+            // Revert cart changes if API call fails
+            setCartItems(cartItems);
         }
     }
     const getCartAmount = () => {
