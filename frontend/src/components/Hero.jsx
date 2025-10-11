@@ -3,7 +3,12 @@ import { assets } from '../assets/assets/frontend_assets/assets'
 import { ShopContext } from '../context/ShopContext'
 
 const Hero = () => {
-  const { navigate } = useContext(ShopContext);
+  const { navigate, setShowSearch } = useContext(ShopContext);
+  
+  const handleSearchClick = () => {
+    setShowSearch(true);
+    navigate('/collection');
+  };
   return (
     <div className='flex flex-col sm:flex-row border border-gray-400'>
         {/* left section */}
@@ -15,14 +20,15 @@ const Hero = () => {
                 </div>
                 <h1 className='prata-regular text-3xl sm:py-3 lg:text-5xl leading-relaxed'>Latest Arrivals</h1>
                 <div className='flex flex-col sm:flex-row gap-4 mt-4'>
-                  <div className='flex items-center gap-2 cursor-pointer' onClick={() => navigate('/collection')}>
+                  <div className='flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity' onClick={() => navigate('/collection')}>
                     <p className='font-semibold text-sm md:text-base'>SHOP NOW</p>
                     <p className='w-8 md:w-11 h-[1px] bg-[#414141]'></p>
                   </div>
                   <button 
-                    onClick={() => navigate('/collection')} 
-                    className='bg-black text-white px-6 py-2 text-sm hover:bg-gray-800 transition-colors'
+                    onClick={handleSearchClick}
+                    className='bg-black text-white px-6 py-2 text-sm hover:bg-gray-800 transition-colors flex items-center gap-2'
                   >
+                    <img src={assets.search_icon} className='w-4 h-4 filter invert' alt="" />
                     SEARCH PRODUCTS
                   </button>
                 </div>

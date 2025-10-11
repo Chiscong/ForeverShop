@@ -11,30 +11,62 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+
+    // Frontend validation
+    if (!email || !password) {
+      toast.error('Vui lòng điển đầy đủ các trường');
+      return;
+    }
+
+    if (currentState === 'Sign Up' && !name) {
+      toast.error('Vui lòng nhập tên của bạn');
+      return;
+    }
+
+    if (currentState === 'Sign Up' && password.length < 8) {
+      toast.error('Mật khẩu phải có ít nhất 8 ký tự');
+      return;
+    }
+
+    setLoading(true);
     try {
       if (currentState === 'Sign Up') {
         const response = await axios.post(backendUrl + '/api/user/register', { name, email, password });
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem('token', response.data.token);
+          toast.success('Tạo tài khoản thành công');
         } else {
-          toast.error(response.data.message);
+          toast.error(response.data.message || 'Lỗi đăng ký');
         }
       } else {
         const response = await axios.post(backendUrl + '/api/user/login', { email, password });
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem('token', response.data.token);
+          toast.success('Đăng nhập thành công');
         } else {
-          toast.error(response.data.message);
+          toast.error(response.data.message || 'Login failed');
         }
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
-
+      // Handle different types of errors
+      if (error.response) {
+        // Server responded with error status
+        toast.error(error.response.data.message || 'Server error occurred');
+      } else if (error.request) {
+        // Request was made but no response received
+        toast.error('Network error. Please check your connection.');
+      } else {
+        // Something else happened
+        toast.error('An unexpected error occurred');
+      }
+    } finally {
+      setLoading(false);
     }
   }
   useEffect(() => {
@@ -59,8 +91,11 @@ const Login = () => {
             : <p onClick={() => setCurrentState('Login')} className='cursor-pointer'>Login Here</p>
         }
       </div>
-      <button className='bg-black text-white font-light px-8 py-2 mt-4'>
-        {currentState === 'Login' ? 'Sign in' : 'Sign Up'}
+      <button
+        disabled={loading}
+        className={`font-light px-8 py-2 mt-4 ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-black hover:bg-gray-800'} text-white transition-colors`}
+      >
+        {loading ? 'Processing...' : (currentState === 'Login' ? 'Sign in' : 'Sign Up')}
       </button>
     </form>
   )

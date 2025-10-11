@@ -19,11 +19,11 @@ const loginUser = async (req, res) => {
             const token = createToken(user._id);
             res.json({ success: true, token });
         } else {
-            console.log(err)
-            res.json({ success: false, message: error.message })
+            res.json({ success: false, message: "Mật khẩu không đúng" });
         }
     } catch (error) {
-
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
 };
 // Route for user register
@@ -50,12 +50,9 @@ const registerUser = async (req, res) => {
         const user = await newUser.save();
         const token = createToken(user._id);
         res.json({ success: true, token })
-    }
-
-
-    catch (err) {
-        console.log(err)
-        res.json({ success: false, message: error.message })
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
     }
 };
 // route for admin login
@@ -69,8 +66,8 @@ try {
         res.json({ success: false, message: "Invalid credentials" });
     }
 } catch (error) {
-     console.log(err)
-     res.json({ success: false, message: error.message })
+     console.log(error);
+     res.json({ success: false, message: error.message });
 }
 };
 export { loginUser, registerUser, adminLogin };

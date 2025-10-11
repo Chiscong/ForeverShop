@@ -39,7 +39,7 @@ const Navbar = () => {
                 <img onClick={() => {
                     setShowSearch(true);
                     navigate('/collection');
-                }} src={assets.search_icon} className='w-5 cursor-pointer' alt="" />
+                }} src={assets.search_icon} className='w-5 cursor-pointer hover:opacity-70 transition-opacity' alt="" />
                 <div className='group relative'>
                     <img onClick={() => token ? null : navigate("/login")} className='w-5 cursor-pointer' src={assets.profile_icon} alt="" />
                     {/* {dropdown menu} */}

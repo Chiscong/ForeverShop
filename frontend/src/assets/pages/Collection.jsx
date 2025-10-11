@@ -5,7 +5,7 @@ import { assets } from '../assets/frontend_assets/assets'
 import Title from '../../components/Title'
 import ProductItem from '../../components/ProductItem'
 const Collection = () => {
-  const {products, search ,showSearch} = useContext(ShopContext);
+  const {products, search, showSearch, setShowSearch} = useContext(ShopContext);
   const [showFilters,setShowFilters] = useState(false);
   const [filterProducts,setFilterProducts] = useState([]);
   const [category,setCategory] = useState([]);
@@ -58,6 +58,10 @@ const Collection = () => {
   }
   useEffect(() => {
     setFilterProducts(products);
+    // Auto-show search when entering collection page
+    if (!showSearch) {
+      setShowSearch(true);
+    }
   }, []);
  
   useEffect(() => {
