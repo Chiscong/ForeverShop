@@ -1,70 +1,87 @@
-import React from 'react'
-import Title from '../../components/Title'
+import React from "react";
+import Title from "../../components/Title";
+import { assets } from "../assets/frontend_assets/assets";
+import NewsletterBox from "../../components/NewsletterBox";
 
 const Contact = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white text-gray-800">
-      {/* Tiêu đề */}
-      <div className="text-center text-2xl pt-10 border-t border-gray-200">
-        <Title text1="CONTACT" text2="US" />
+    <div>
+      {/* Tiêu đề trang đồng bộ với trang About */}
+      <div className="text-2xl text-center pt-10 border-t">
+        <Title text1={"CONTACT"} text2={"US"} />
       </div>
 
-      {/* Card liên hệ */}
-      <div className="max-w-xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-2xl transform transition duration-500 hover:scale-[1.02] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
-        <h2 className="text-xl font-semibold mb-6 text-center">📬 Thông tin liên hệ</h2>
+      {/* Layout Flexbox: Ảnh và Thông tin */}
+      <div className="my-10 flex flex-col justify-center md:flex-row gap-10 mb-28">
+        {/* Hình ảnh minh họa contact - Sử dụng asset của shop */}
+        <img
+          className="w-full md:max-w-[480px] rounded-lg shadow-sm"
+          src={assets.avatarContact}
+          alt="Contact Forever Shop"
+        />
 
-        <div className="space-y-5 text-sm">
-          {/* Email */}
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-28">📧 Email:</span>
-            <a
-              href="mailto:pchicong.work@gmail.com"
-              className="text-blue-600 hover:underline hover:text-blue-800 transition"
-            >
-              pchicong.work@gmail.com
-            </a>
+        {/* Khối thông tin liên hệ */}
+        <div className="flex flex-col justify-center items-start gap-6">
+          <p className="font-semibold text-xl text-gray-600">Our Information</p>
+
+          <div className="text-gray-500 flex flex-col gap-3">
+            <p>
+              <span className="font-medium text-gray-700">📧 Email:</span>{" "}
+              <a
+                href="mailto:pchicong.work@gmail.com"
+                className="hover:text-black transition-colors"
+              >
+                pchicong.work@gmail.com
+              </a>
+            </p>
+
+            <p>
+              <span className="font-medium text-gray-700">📞 Phone:</span>{" "}
+              <a
+                href="tel:+84337296592"
+                className="hover:text-black transition-colors"
+              >
+                +84 337 296 592
+              </a>
+            </p>
           </div>
 
-          {/* Số điện thoại */}
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-28">📞 SĐT:</span>
-            <a
-              href="tel:+84337296592"
-              className="text-blue-600 hover:underline hover:text-blue-800 transition"
-            >
-              +84 337 296 592
-            </a>
-          </div>
+          <p className="font-semibold text-xl text-gray-600">Social Network</p>
 
-          {/* LinkedIn */}
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-28">LinkedIn:</span>
+          <div className="flex flex-col gap-3">
             <a
               href="https://www.linkedin.com/in/congpc2005/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline hover:text-blue-800 transition"
+              className="text-gray-500 hover:text-black transition-all flex items-center gap-2"
             >
-              Chí Công 
+              LinkedIn:{" "}
+              <span className="underline text-blue-600">Phùng Chí Công</span>
             </a>
-          </div>
 
-          {/* GitHub */}
-          <div className="flex items-center gap-3">
-            <span className="font-medium w-28"> GitHub:</span>
             <a
               href="https://github.com/Chiscong"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline hover:text-blue-800 transition"
+              className="text-gray-500 hover:text-black transition-all flex items-center gap-2"
             >
-              Chiscong
+              GitHub: <span className="underline text-gray-800">Chiscong</span>
             </a>
           </div>
+
+          {/* Nút bấm theo style của shop */}
+          <a href="https://www.facebook.com/chi.cong.555555" target="_blank">
+            <button className="border border-black px-8 py-4 text-sm hover:bg-black hover:text-white transition-all duration-500 mt-4">
+              Send Message
+            </button>
+          </a>
         </div>
       </div>
-    </div>
-  )
-}
 
-export default Contact
+      {/* NewsletterBox để đồng bộ với Footer của các trang khác */}
+      <NewsletterBox />
+    </div>
+  );
+};
+
+export default Contact;
