@@ -72,4 +72,55 @@ const singleProduct = async (req, res) => {
     res.json({ success: false, message: error.message })
  }
 }
-export { addProduct, listProduct, removeProduct, singleProduct };
+// Function cập nhật thông tin sản phẩm
+const updateProduct = async (req, res) => {
+    try {
+        const { id, name, description, price, category, subCategory, sizes, bestseller } = req.body;
+
+        // 1. Chuẩn bị dữ liệu cập nhật cơ bản
+        const updateData = {
+            name,
+            description,
+            category,
+            price: Number(price),
+            subCategory,
+            bestseller: bestseller === 'true',
+            sizes: JSON.parse(sizes)
+        };
+
+        // 2. Xử lý hình ảnh (Nếu có ảnh mới được upload)
+        const image1 = req.files?.image1?.[0];
+        const image2 = req.files?.image2?.[0];
+        const image3 = req.files?.image3?.[0];
+        const image4 = req.files?.image4?.[0];
+
+        const newImages = [image1, image2, image3, image4].filter(item => item !== undefined);
+
+        if (newImages.length > 0) {
+            const imagesUrl = await Promise.all(
+                newImages.map(async (item) => {
+                    const b64 = Buffer.from(item.buffer).toString("base64");
+                    const dataURI = "data:" + item.mimetype + ";base64," + b64;
+                    let result = await cloudinary.uploader.upload(dataURI, { resource_type: 'image' });
+                    return result.secure_url;
+                })
+            );
+            updateData.image = imagesUrl; // Ghi đè mảng ảnh cũ bằng mảng ảnh mới
+        }
+
+        const updatedProduct = await productModel.findByIdAndUpdate(id, updateData, { new: true });
+
+        if (!updatedProduct) {
+            return res.json({ success: false, message: "Không tìm thấy sản phẩm" });
+        }
+
+        res.json({ success: true, message: "Cập nhật sản phẩm thành công" });
+
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: error.message });
+    }
+}
+
+// Thêm vào danh sách export
+export { addProduct, listProduct, removeProduct, singleProduct, updateProduct };

@@ -252,4 +252,4 @@ const Add = ({ token }) => {
         )
     }
 
-    export default Add
+export default Add
