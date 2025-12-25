@@ -14,7 +14,7 @@ import Footer from './components/Footer'
 import SearchBar from './components/SearchBar'
 import { ToastContainer } from 'react-toastify';
 import Verify from './assets/pages/Verify'
-
+import AIAssistant from './components/AIAssistant'
 export const App = () => {
   return (
     <div className='px-4 sm:px-[5w] md:px-[7vw] lg:px-[9vw]'>
@@ -33,6 +33,7 @@ export const App = () => {
         <Route path='/orders' element={<Orders/>}/>
         <Route path='/verify' element={<Verify/>}/>
       </Routes>
+      <AIAssistant/>
       <Footer/>
     </div>
   )
