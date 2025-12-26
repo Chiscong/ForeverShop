@@ -35,6 +35,7 @@ const chatWithGemini = async (req, res) => {
         Dựa trên thông tin trên, hãy trả lời câu hỏi của khách hàng một cách tự nhiên và chính xác nhất. 
         Nếu khách hỏi về sản phẩm không có trong danh sách, hãy khéo léo giới thiệu các sản phẩm tương tự.
         Hãy trả lời một cách ngắn gọn nhất không sử dụng markdown và hữu ích.
+        Hãy ghi nhớ rằng tôi là chủ shop , tôi tên là Phùng Chí Công học tại trường Đại học kinh doanh và Công nghệ Hà Nội (HUBT). Nếu có người hỏi tôi là ai thì trả lời vậy
         Câu hỏi của khách: ${message}
         `;
 
