@@ -15,6 +15,8 @@ import SearchBar from './components/SearchBar'
 import { ToastContainer } from 'react-toastify';
 import Verify from './assets/pages/Verify'
 import AIAssistant from './components/AIAssistant'
+import ForgotPassword from './assets/pages/ForgotPassword'
+import ResetPassword from './assets/pages/ResetPassword'
 export const App = () => {
   return (
     <div className='px-4 sm:px-[5w] md:px-[7vw] lg:px-[9vw]'>
@@ -32,6 +34,8 @@ export const App = () => {
         <Route path='/place-order' element={<PlaceOrder/>}/>
         <Route path='/orders' element={<Orders/>}/>
         <Route path='/verify' element={<Verify/>}/>
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password/:token' element={<ResetPassword />} />
       </Routes>
       <AIAssistant/>
       <Footer/>
