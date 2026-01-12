@@ -5,13 +5,13 @@ const chatWithGemini = async (req, res) => {
     try {
         const { message } = req.body;
 
-        // 1. Lấy danh sách sản phẩm từ Database
+     
         const products = await productModel.find({});
         const productInfo = products.map(p => 
             `- ${p.name}: Giá ${p.price}$, Loại ${p.category}, Mô tả: ${p.description}`
         ).join('\n');
 
-        // 2. Định nghĩa Chính sách bảo hành & thông tin Shop
+        
         const shopPolicy = `
         Chính sách của Forever Shop:
         - Đổi trả: Chính sách đổi trả dễ dàng, không rắc rối.
@@ -23,7 +23,7 @@ const chatWithGemini = async (req, res) => {
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-        // 4. Bơm ngữ cảnh (Context Injection) vào Prompt
+        
         const prompt = `
         Bạn là trợ lý ảo chuyên nghiệp của "Forever Shop". 
         Dưới đây là dữ liệu sản phẩm hiện có trong kho:
